@@ -3,6 +3,12 @@ import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
 import MenuComponent from './MenuComponent'
 import HomeComponent from './HomeComponent' 
 import DetallesEquipo from './DetallesEquipo'
+import JugadoresEquipo from './JugadoresEquipo'
+
+function JugadoresEquipoElement() {
+    let { idequipo } = useParams();
+    return <JugadoresEquipo idequipo={idequipo}/>
+}
 
 function DetallesEquipoElement() {
     let { idequipo } = useParams();
@@ -17,6 +23,7 @@ export default class Router extends Component {
                 <Routes>
                     <Route path="/" element={<HomeComponent/>}/>
                     <Route path="/equipo/:idequipo" element={<DetallesEquipoElement/>}/>
+                    <Route path="/jugadores/:idequipo" element={<JugadoresEquipoElement/>}/>
                 </Routes>
             </BrowserRouter>
         )
