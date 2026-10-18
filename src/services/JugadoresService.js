@@ -9,11 +9,11 @@ async getJugadoresEquipo(idequipo) {
     return response.data;
 }
     async findJugador(id){
-        const response = await axios.get(Global.urlApi + '/api/Jugadores/' + id);
+        const response = await axios.get(Global.urlApi + 'api/Jugadores/' + id);
         return response.data;
     }
-    async buscarJugadores(nombre){
-        const response = await axios.get(Global.urlApi + '/api/Jugadores/Buscar/' + nombre);
-        return response.data;
-    }
+async buscarJugadores(nombre) {
+    const response = await axios.get(Global.urlApi + 'api/Jugadores/FindJugadores/' + nombre);
+    return response.data;
+}
 }
