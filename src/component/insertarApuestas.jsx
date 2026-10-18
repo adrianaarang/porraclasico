@@ -1,29 +1,27 @@
-//Ruta /create, con el formulario y idApuesta: 0. Al guardar, Navigate a /apuestas.
+///Ruta /create, con el formulario y idApuesta: 0. Al guardar, Navigate a /apuestas.
 import React, { Component } from 'react'
+import { Navigate } from 'react-router-dom'
 import ServiceApuestas from '../services/ApuestasService'
-import { Navigate } from 'react-router-dom'; 
 
 export default class InsertarApuestas extends Component {
+    service = new ServiceApuestas();
+    cajaUsuario = React.createRef();
+    cajaResultado = React.createRef();
+    cajaFecha = React.createRef();
 
-service = new ServiceApuestas(); 
-idApuesta = 0;
-cajaUsuario = React.createRef();
-cajaResultado = React.createRef();
-cajaFecha = React.createRef();
-
-
- state = {
+    state = {
         mensaje: null,
-        status: false,
+        status: false
     }
- insertApuesta = (event) => {
+
+    insertApuesta = (event) => {
         event.preventDefault();
-        //CREAMOS EL OBJETO APUESTA
+        //CREAMOS EL OBJETO APUESTA (EL ID DA IGUAL, LO GENERA LA API)
         let apuesta = {
             idApuesta: 0,
             usuario: this.cajaUsuario.current.value,
             resultado: this.cajaResultado.current.value,
-            fecha: this.cajaFecha.current.value,
+            fecha: this.cajaFecha.current.value
         }
         //LOS ERRORES SE CAPTURAN IGUAL EN UNA PROMESA (then...catch)
         this.service.insertApuesta(apuesta)
@@ -38,55 +36,38 @@ cajaFecha = React.createRef();
             })
     }
 
-
     render() {
+        //AL GUARDAR, VOLVEMOS A LA LISTA DE APUESTAS
         if (this.state.status == true) {
-            return (<Navigate to="/" />)
+            return (<Navigate to="/apuestas" />)
         }
 
-        let input = "mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-200";
-        let label = "block text-sm font-medium text-slate-700";
-
         return (
-            <main className="mx-auto max-w-lg px-4 py-12">
-                <div className="overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-slate-200">
-
-                    <div className="p-6">
-                        <h1 className="text-2xl font-bold text-slate-900">Nueva apuesta</h1>
-                        {
-                            this.state.mensaje &&
-                            (<p className="mt-3 rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-red-600">
-                                {this.state.mensaje}
-                            </p>)
-                        }
-                        <form className="mt-4 space-y-4">
-                            <div>
-                                <label className={label}>Id apuesta</label>
-                                <input type="number" className={input} ref={this.idApuesta} />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className={label}>Usuario</label>
-                                    <input type="text" className={input} ref={this.cajaUsuario} />
-                                </div>
-                                <div>
-                                    <label className={label}>Resultado</label>
-                                    <input type="text" className={input} ref={this.cajaResultado} />
-                                </div>
-                            </div>
-                            <div>
-                                <label className={label}>Fecha</label>
-                                <input type="text" className={input} ref={this.cajaFecha} />
-                            </div>
-                         
-                            <button onClick={this.insertApuesta}
-                                className="w-full rounded-lg bg-amber-400 px-4 py-2.5 font-semibold text-slate-900 transition hover:bg-amber-300">
-                                Insertar
-                            </button>
-                        </form>
+            <div className="container mt-4" style={{ maxWidth: "500px" }}>
+                <h1 className="mb-3">Nueva apuesta</h1>
+                {
+                    this.state.mensaje &&
+                    (<div className="alert alert-danger">{this.state.mensaje}</div>)
+                }
+                <form>
+                    <div className="mb-3">
+                        <label className="form-label">Usuario</label>
+                        <input type="text" className="form-control" ref={this.cajaUsuario} />
                     </div>
-                </div>
-            </main>
+                    <div className="mb-3">
+                        <label className="form-label">Resultado</label>
+                        <input type="text" className="form-control" ref={this.cajaResultado}
+                            placeholder="Ej: 2-1" />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Fecha</label>
+                        <input type="date" className="form-control" ref={this.cajaFecha} />
+                    </div>
+                    <button className="btn btn-primary" onClick={this.insertApuesta}>
+                        Guardar apuesta
+                    </button>
+                </form>
+            </div>
         )
     }
 }

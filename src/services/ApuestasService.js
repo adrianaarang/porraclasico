@@ -16,5 +16,7 @@ export default class ServiceApuestas {
         const response = await axios.delete(Global.urlApi + '/api/Apuestas/' + id);
         return response.data;
     }
+
+    
 }
 
