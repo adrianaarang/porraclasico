@@ -7,6 +7,7 @@ import JugadoresEquipo from './JugadoresEquipo'
 import DetallesJugador from './DetallesJugador'
 import PaginaApuestas from './PaginaApuestas'
 import InsertarApuestas from './InsertarApuestas'
+import Buscador from './Buscador'
 
 function DetallesEquipoElement() {
     let { idequipo } = useParams();
@@ -35,6 +36,7 @@ export default class Router extends Component {
                     <Route path="/jugador/:idjugador" element={<DetallesJugadorElement />} />
                     <Route path="/apuestas" element={<PaginaApuestas />} />
                     <Route path="/create" element={<InsertarApuestas />} />
+                    <Route path="/buscador" element={<Buscador />} />
                 </Routes>
             </BrowserRouter>
         )
